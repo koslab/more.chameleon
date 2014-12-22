@@ -15,5 +15,6 @@ setup(
     install_requires=[
         'morepath>=0.9',
         'more.static',
+        'Chameleon >= 2.14',
     ]
 )
