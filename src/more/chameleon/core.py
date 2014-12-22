@@ -7,33 +7,37 @@ from morepath.reify import reify
 @App.setting_section(section='chameleon')
 def get_setting_section():
     return {
-        'main_template': 'main_template.pt',
         'auto_reload': False
     }
 
 class Repository(object):
     
-    def __init__(self, path, static=None):
+    def __init__(self, path, main_template=None, static_component=None):
         self.repository = PageTemplateLoader(path)
-        self.static = static
+        self.main_template = main_template
+        self.static_component = static_component
 
     def __call__(self, name):
-        return Renderer(name, self.repository, self.static)
+        return Renderer(name, self.repository, self.main_template, 
+                        self.static_component)
 
 class Renderer(object):
 
-    def __init__(self, name, repository, static_component):
+    def __init__(self, name, repository, main_template, static_component):
         self.name = name
         self.repository = repository
+        self.main_template = main_template
         self.static_component = static_component
 
     def template_globals(self, request):
         settings = request.app.registry.settings.chameleon
         result = {
-            'main_template': self.repository[settings.main_template],
-            'application_url': request.application_url
+            'application_url': request.application_url,
+            'request': request
         }
 
+        if self.main_template:
+            result['main_template'] = self.repository[self.main_template]
         if self.static_component:
             result['static_url'] = request.app.bower_components.get_component(
                     self.static_component).url()
