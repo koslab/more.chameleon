@@ -33,5 +33,5 @@ You may override settings through:
     def get_setting_section():
         return {
             'main_template': 'main_template.pt', # name of main template
-            'debug': False # debug mode
+            'auto_reload': False, # auto reload templates
         }
