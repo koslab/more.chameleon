@@ -12,35 +12,30 @@ def get_setting_section():
 
 class Repository(object):
     
-    def __init__(self, path, main_template=None, static_component=None):
+    def __init__(self, path):
         self.repository = PageTemplateLoader(path)
-        self.main_template = main_template
-        self.static_component = static_component
 
     def __call__(self, name):
-        return Renderer(name, self.repository, self.main_template, 
-                        self.static_component)
+        return Renderer(name, self.repository)
 
 class Renderer(object):
 
-    def __init__(self, name, repository, main_template, static_component):
+    def __init__(self, name, repository):
         self.name = name
         self.repository = repository
-        self.main_template = main_template
-        self.static_component = static_component
+
+    def static_url(self, component):
+        return request.app.bower_components.get_component(
+            component).url()
 
     def template_globals(self, request):
         settings = request.app.registry.settings.chameleon
         result = {
             'application_url': request.application_url,
-            'request': request
+            'request': request,
+            'templates': self.repository,
+            'static_url': self.static_url
         }
-
-        if self.main_template:
-            result['main_template'] = self.repository[self.main_template]
-        if self.static_component:
-            result['static_url'] = request.app.bower_components.get_component(
-                    self.static_component).url()
         return result
 
     def __call__(self, content, request):

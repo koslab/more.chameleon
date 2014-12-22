@@ -12,9 +12,7 @@ Initialize template repository:
     import os
 
     templates = Repository(
-         path=os.path.join(os.path.directory(__file__)),'templates'),
-         main_template='main_template.pt',
-         static_component='my_static_component'
+         os.path.join(os.path.directory(__file__)),'templates'),
     )
 
 Using the renderer
