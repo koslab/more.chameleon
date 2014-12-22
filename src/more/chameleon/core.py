@@ -22,10 +22,8 @@
 # 
 
 from morepath.app import App
-from reg import dispatch
 from chameleon import PageTemplateLoader
 from morepath.request import Response
-from morepath.reify import reify
 
 @App.setting_section(section='chameleon')
 def get_setting_section():
