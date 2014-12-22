@@ -14,7 +14,7 @@ Initialize template repository:
     templates = Repository(
          path=os.path.join(os.path.directory(__file__)),'templates'),
          static='morestatic_component'
-   )
+    )
 
 Using the renderer
 
@@ -27,11 +27,11 @@ Using the renderer
 Overriding settings
 --------------------
 
-You may override settings by:
+You may override settings through:
 
     @App.setting_section(section='chameleon')
     def get_setting_section():
-    return {
-        'main_template': 'main_template.pt', # name of main template
-        'debug': False # debug mode
-    }
+        return {
+            'main_template': 'main_template.pt', # name of main template
+            'debug': False # debug mode
+        }

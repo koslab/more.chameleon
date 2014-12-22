@@ -8,7 +8,7 @@ from morepath.reify import reify
 def get_setting_section():
     return {
         'main_template': 'main_template.pt',
-        'debug': False
+        'auto_reload': False
     }
 
 class Repository(object):
@@ -42,8 +42,7 @@ class Renderer(object):
     def __call__(self, content, request):
         settings = request.app.registry.settings.chameleon
         template = self.repository[self.name]
-        if settings.debug:
-            template.auto_reload = True
+        template.auto_reload = settings.auto_reload
 
         result = template(
                 options=content, **self.template_globals(request)
