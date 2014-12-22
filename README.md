@@ -33,3 +33,13 @@ You may override settings through:
         return {
             'auto_reload': False, # auto reload templates
         }
+
+Template globals
+-----------------
+
+Following are template globals passed to the template on render:
+
+*   request - the request object
+*   templates - the PageTemplateLoader repository
+*   static_url - returns static url of more.static component
+*   options - values returned from the view function

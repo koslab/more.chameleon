@@ -18,6 +18,14 @@ class Repository(object):
     def __call__(self, name):
         return Renderer(name, self.repository)
 
+class StaticUrl(object):
+
+    def __init__(self, request):
+        self.components = request.app.bower_components
+
+    def __call__(self, component):
+        return self.components.get_component(component).url()
+        
 class Renderer(object):
 
     def __init__(self, name, repository):
@@ -34,7 +42,7 @@ class Renderer(object):
             'application_url': request.application_url,
             'request': request,
             'templates': self.repository,
-            'static_url': self.static_url
+            'static_url': StaticUrl(request)
         }
         return result
 
