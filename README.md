@@ -15,6 +15,15 @@ Initialize template repository:
          os.path.join(os.path.directory(__file__)),'templates'),
     )
 
+Hooking up the registry
+
+
+    def main():
+        config = morepath.Config()
+        ....
+        config.scan(more.chameleon)
+        ....
+
 Using the renderer
 
     @App.view(model=MyModel, render=templates('templatename.pt'))
